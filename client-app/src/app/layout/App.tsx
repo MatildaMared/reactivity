@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container } from "semantic-ui-react";
+import { Button, Container } from "semantic-ui-react";
 import { Activity } from "../models/activity";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
@@ -7,6 +7,7 @@ import { v4 as uuid } from "uuid";
 import agent from "../api/agent";
 import LoadingComponent from "./LoadingComponent";
 import { useStore } from "../stores/store";
+import { observer } from "mobx-react-lite";
 
 function App() {
 	const { activityStore } = useStore();
@@ -66,26 +67,17 @@ function App() {
 	}
 
 	useEffect(() => {
-		agent.Activities.list().then((response) => {
-			let activities: Activity[] = [];
-			response.forEach((activity) => {
-				activity.date = activity.date.split("T")[0];
-				activities.push(activity);
-			});
-			setActivities(activities);
-			setIsLoading(false);
-		});
-	}, []);
+		activityStore.loadActivities();
+	}, [activityStore]);
 
-	if (isLoading) return <LoadingComponent content="Loading app..." />;
+	if (activityStore.loadingInitial) return <LoadingComponent content="Loading app..." />;
 
 	return (
 		<>
 			<NavBar handleFormOpen={handleFormOpen} />
 			<Container style={{ marginTop: "7em" }}>
-				<h2>{activityStore.title}</h2>
 				<ActivityDashboard
-					activities={activities}
+					activities={activityStore.activities}
 					selectedActivity={selectedActivity}
 					handleSelectActivity={handleSelectActivity}
 					handleCancelSelectActivity={handleCancelSelectActivity}
@@ -101,4 +93,4 @@ function App() {
 	);
 }
 
-export default App;
+export default observer(App);
