@@ -40,7 +40,9 @@ function ActivityDashboard({
 						handleFormOpen={handleFormOpen}
 					/>
 				)}
-				<ActivityForm editMode={editMode} handleFormClose={handleFormClose} />
+				{editMode && (
+					<ActivityForm activity={selectedActivity} handleFormClose={handleFormClose} />
+				)}
 			</Grid.Column>
 		</Grid>
 	);
