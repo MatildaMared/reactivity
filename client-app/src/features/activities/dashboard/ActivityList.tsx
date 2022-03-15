@@ -5,9 +5,14 @@ import { Activity } from "../../../app/models/activity";
 interface Props {
 	activities: Activity[];
 	handleSelectActivity: (id: string) => void;
+	deleteActivity: (id: string) => void;
 }
 
-function ActivityList({ activities, handleSelectActivity }: Props) {
+function ActivityList({
+	activities,
+	handleSelectActivity,
+	deleteActivity,
+}: Props) {
 	return (
 		<Segment>
 			<Item.Group divided>
@@ -28,6 +33,12 @@ function ActivityList({ activities, handleSelectActivity }: Props) {
 									content="View"
 									color="blue"
 									onClick={() => handleSelectActivity(activity.id)}
+								/>
+								<Button
+									floated="right"
+									content="Delete"
+									color="red"
+									onClick={() => deleteActivity(activity.id)}
 								/>
 								<Label basic content={activity.category} />
 							</Item.Extra>

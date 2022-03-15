@@ -52,6 +52,11 @@ function App() {
 		setSelectedActivity(activity);
 	}
 
+	function handleDeleteActivity(id: string) {
+		setActivities(activities.filter((x) => x.id !== id));
+		setSelectedActivity(undefined);
+	}
+
 	useEffect(() => {
 		getActivities();
 	}, []);
@@ -69,6 +74,7 @@ function App() {
 					handleFormOpen={handleFormOpen}
 					handleFormClose={handleFormClose}
 					createOrEdit={handleCreateOrEditActivity}
+					deleteActivity={handleDeleteActivity}
 				/>
 			</Container>
 		</>
