@@ -18,7 +18,6 @@ function App() {
 
 	function handleCancelSelectActivity() {
 		setSelectedActivity(undefined);
-		setEditMode(false);
 	}
 
 	function handleFormOpen(id?: string) {
@@ -37,6 +36,18 @@ function App() {
 		setActivities(response.data);
 	}
 
+	function handleCreateOrEditActivity(activity: Activity) {
+		// Edit activity if activity id exists, else add new activity
+		activity.id
+			? setActivities([
+					...activities.filter((x) => x.id !== activity.id),
+					activity,
+			  ])
+			: setActivities([...activities, activity]);
+		setSelectedActivity(activity);
+		setEditMode(false);
+	}
+
 	useEffect(() => {
 		getActivities();
 	}, []);
@@ -53,6 +64,7 @@ function App() {
 					editMode={editMode}
 					handleFormOpen={handleFormOpen}
 					handleFormClose={handleFormClose}
+					createOrEdit={handleCreateOrEditActivity}
 				/>
 			</Container>
 		</>
