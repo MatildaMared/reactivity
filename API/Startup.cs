@@ -30,6 +30,7 @@ namespace API
         {
             if (env.IsDevelopment())
             {
+                Console.WriteLine("Development mode!");
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv5 v1"));
