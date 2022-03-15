@@ -14,6 +14,7 @@ function App() {
 	>(undefined);
 	const [editMode, setEditMode] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	function handleSelectActivity(id: string) {
 		setSelectedActivity(activities.find((x) => x.id === id));
@@ -33,18 +34,23 @@ function App() {
 	}
 
 	function handleCreateOrEditActivity(activity: Activity) {
-		if (!activity.id) {
+		setIsSubmitting(true);
+
+		if (activity.id) {
+			agent.Activities.update(activity).then(() => {
+				setSelectedActivity(activity);
+				setEditMode(false);
+				setIsSubmitting(false);
+			});
+		} else {
 			activity.id = uuid();
+			agent.Activities.create(activity).then(() => {
+				setActivities([...activities, activity]);
+				setSelectedActivity(activity);
+				setEditMode(false);
+				setIsSubmitting(false);
+			});
 		}
-		// Edit activity if activity id exists, else add new activity
-		activity.id
-			? setActivities([
-					...activities.filter((x) => x.id !== activity.id),
-					activity,
-			  ])
-			: setActivities([...activities, activity]);
-		setEditMode(false);
-		setSelectedActivity(activity);
 	}
 
 	function handleDeleteActivity(id: string) {
@@ -80,6 +86,7 @@ function App() {
 					handleFormClose={handleFormClose}
 					createOrEdit={handleCreateOrEditActivity}
 					deleteActivity={handleDeleteActivity}
+					submitting={isSubmitting}
 				/>
 			</Container>
 		</>

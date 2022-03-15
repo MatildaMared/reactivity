@@ -6,12 +6,14 @@ interface Props {
 	activity: Activity | undefined;
 	handleFormClose: () => void;
 	createOrEdit: (activity: Activity) => void;
+	submitting: boolean;
 }
 
 function ActivityForm({
 	activity: selectedActivity,
 	handleFormClose,
 	createOrEdit,
+	submitting,
 }: Props) {
 	const initialState = selectedActivity ?? {
 		id: "",
@@ -76,7 +78,13 @@ function ActivityForm({
 					name="venue"
 					onChange={handleInputChange}
 				/>
-				<Button floated="right" positive type="submit" content="Submit" />
+				<Button
+					floated="right"
+					positive
+					type="submit"
+					content="Submit"
+					loading={submitting}
+				/>
 				<Button
 					floated="right"
 					type="button"
