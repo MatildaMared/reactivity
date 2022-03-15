@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import { Activity } from "../models/activity";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
@@ -17,25 +17,7 @@ function App() {
 		Activity | undefined
 	>(undefined);
 	const [editMode, setEditMode] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-
-	function handleSelectActivity(id: string) {
-		setSelectedActivity(activities.find((x) => x.id === id));
-	}
-
-	function handleCancelSelectActivity() {
-		setSelectedActivity(undefined);
-	}
-
-	function handleFormOpen(id?: string) {
-		id ? handleSelectActivity(id) : handleCancelSelectActivity();
-		setEditMode(true);
-	}
-
-	function handleFormClose() {
-		setEditMode(false);
-	}
 
 	function handleCreateOrEditActivity(activity: Activity) {
 		setIsSubmitting(true);
@@ -70,20 +52,15 @@ function App() {
 		activityStore.loadActivities();
 	}, [activityStore]);
 
-	if (activityStore.loadingInitial) return <LoadingComponent content="Loading app..." />;
+	if (activityStore.loadingInitial)
+		return <LoadingComponent content="Loading app..." />;
 
 	return (
 		<>
-			<NavBar handleFormOpen={handleFormOpen} />
+			<NavBar />
 			<Container style={{ marginTop: "7em" }}>
 				<ActivityDashboard
 					activities={activityStore.activities}
-					selectedActivity={selectedActivity}
-					handleSelectActivity={handleSelectActivity}
-					handleCancelSelectActivity={handleCancelSelectActivity}
-					editMode={editMode}
-					handleFormOpen={handleFormOpen}
-					handleFormClose={handleFormClose}
 					createOrEdit={handleCreateOrEditActivity}
 					deleteActivity={handleDeleteActivity}
 					submitting={isSubmitting}

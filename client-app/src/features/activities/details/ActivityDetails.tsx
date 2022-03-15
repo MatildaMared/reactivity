@@ -1,18 +1,13 @@
 import React from "react";
 import { Button, ButtonGroup, Card, Image } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
+import { useStore } from "../../../app/stores/store";
 
-interface Props {
-	activity: Activity;
-	handleCancelSelectActivity: () => void;
-	handleFormOpen: (id?: string) => void;
-}
+function ActivityDetails() {
+	const { activityStore } = useStore();
+	const { selectedActivity: activity, openForm, cancelSelectedActivity } = activityStore;
 
-function ActivityDetails({
-	activity,
-	handleCancelSelectActivity,
-	handleFormOpen,
-}: Props) {
+	if (!activity) return null;
+
 	return (
 		<Card fluid>
 			<Image src={`./assets/categoryImages/${activity.category}.jpg`} />
@@ -29,13 +24,13 @@ function ActivityDetails({
 						basic
 						color="blue"
 						content="Edit"
-						onClick={() => handleFormOpen(activity.id)}
+						onClick={() => openForm(activity.id)}
 					/>
 					<Button
 						basic
 						color="grey"
 						content="Cancel"
-						onClick={handleCancelSelectActivity}
+						onClick={cancelSelectedActivity}
 					/>
 				</ButtonGroup>
 			</Card.Content>
