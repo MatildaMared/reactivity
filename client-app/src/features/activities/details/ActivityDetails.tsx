@@ -1,12 +1,18 @@
 import React from "react";
 import { Button, ButtonGroup, Card, Image } from "semantic-ui-react";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 
 function ActivityDetails() {
 	const { activityStore } = useStore();
-	const { selectedActivity: activity, openForm, cancelSelectedActivity } = activityStore;
+	const {
+		selectedActivity: activity,
+	} = activityStore;
 
 	if (!activity) return null;
+
+	if (activityStore.loading)
+		return <LoadingComponent content="Loading activity..." />;
 
 	return (
 		<Card fluid>
@@ -24,13 +30,11 @@ function ActivityDetails() {
 						basic
 						color="blue"
 						content="Edit"
-						onClick={() => openForm(activity.id)}
 					/>
 					<Button
 						basic
 						color="grey"
 						content="Cancel"
-						onClick={cancelSelectedActivity}
 					/>
 				</ButtonGroup>
 			</Card.Content>
