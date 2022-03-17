@@ -38,14 +38,17 @@ export default class ActivityStore {
 		if (activity) {
 			this.selectedActivity = activity;
 		} else {
-			this.loadingInitial = true;
+			this.setLoadingInitial(true);
 			try {
 				activity = await agent.Activities.details(id);
+				this.setLoadingInitial(false);
 				this.setActivity(activity);
-				this.loadingInitial = false;
+				runInAction(() => {
+					this.selectedActivity = activity;
+				});
 			} catch (err) {
 				console.log(err);
-				this.loadingInitial = false;
+				this.setLoadingInitial(false);
 			}
 		}
 	};
