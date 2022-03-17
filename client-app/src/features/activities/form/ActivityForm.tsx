@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Button, Form, Segment } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { Activity } from "../../../app/models/activity";
@@ -110,7 +110,13 @@ function ActivityForm() {
 					content="Submit"
 					loading={loading}
 				/>
-				<Button floated="right" type="button" content="Cancel" />
+				<Button
+					floated="right"
+					type="button"
+					content="Cancel"
+					as={Link}
+					to="/activities"
+				/>
 			</Form>
 		</Segment>
 	);
