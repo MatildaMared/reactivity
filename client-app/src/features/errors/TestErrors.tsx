@@ -23,9 +23,9 @@ function TestErrors() {
 			.catch((err) => console.log(err.response));
 	}
 
-	function handleUnauthorised() {
+	function handleUnauthorized() {
 		axios
-			.get(baseUrl + "buggy/unauthorised")
+			.get(baseUrl + "buggy/unauthorized")
 			.catch((err) => console.log(err.response));
 	}
 
@@ -66,8 +66,8 @@ function TestErrors() {
 						primary
 					/>
 					<Button
-						onClick={handleUnauthorised}
-						content="Unauthorised"
+						onClick={handleUnauthorized}
+						content="Unauthorized"
 						basic
 						primary
 					/>
