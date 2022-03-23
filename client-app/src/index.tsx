@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import { store, StoreContext } from "./app/stores/store";
 import { Router } from "react-router-dom";
 import { createBrowserHistory } from "history";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const history = createBrowserHistory();
 console.log(history);

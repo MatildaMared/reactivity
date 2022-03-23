@@ -12,6 +12,7 @@ import MyTextInput from "../../../app/common/form/MyTextInput";
 import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
+import MyDateInput from "../../../app/common/form/MyDateInput";
 
 function ActivityForm() {
 	const history = useHistory();
@@ -90,8 +91,12 @@ function ActivityForm() {
 					<Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
 						<MyTextInput name="title" placeholder="Title" label="Title" />
 						<MyTextArea rows={3} placeholder="Description" name="description" />
-						<MySelectInput options={categoryOptions} placeholder="Category" name="category" />
-						<MyTextInput placeholder="Date" name="date" />
+						<MySelectInput
+							options={categoryOptions}
+							placeholder="Category"
+							name="category"
+						/>
+						<MyDateInput dateFormat="MMMM, d, yyyy h:mm:aa" showTimeSelect timeCaption="time" placeholderText="Date" name="date" />
 						<MyTextInput placeholder="City" name="city" />
 						<MyTextInput placeholder="Venue" name="venue" />
 						<Button
